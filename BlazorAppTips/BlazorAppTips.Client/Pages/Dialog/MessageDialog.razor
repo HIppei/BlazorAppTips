@@ -1,0 +1,47 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div id="overlay" @onclick="Close" />
+<div id="dialog">
+    <div id="container">
+        <button @onclick="OnYes">Yes</button>
+        <button @onclick="OnNo">No</button>
+    </div>
+</div>
+
+@code {
+
+    public enum Result
+    {
+        Yes,
+        No
+    }
+
+    private TaskCompletionSource<Result>? tsc;
+
+    public Task<Result> GetResult()
+    {
+        tsc = new TaskCompletionSource<Result>();
+        return tsc.Task;
+    }
+
+    private async Task OnYes()
+    {
+        if (tsc is not null && !tsc.Task.IsCompleted)
+            tsc.SetResult(Result.Yes);
+
+        await Close();
+    }
+
+    private async Task OnNo()
+    {
+        if (tsc is not null && !tsc.Task.IsCompleted)
+            tsc.SetResult(Result.No);
+
+        await Close();
+    }
+
+    private async Task Close()
+    {
+        await JSRuntime.InvokeVoidAsync("toggle", false);
+    }
+}

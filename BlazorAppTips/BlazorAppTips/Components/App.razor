@@ -15,6 +15,31 @@
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
+    <script>
+        // 表示処理
+        function toggle(isOpen) {
+            // エレメントを取得
+            const dialog = document.getElementById('dialog');
+            const overlay = document.getElementById('overlay');
+
+            // Scrollを固定するためのエレメント
+            const body = document.body;
+
+            if (isOpen) {
+                dialog.style.opacity = 1;
+                dialog.style.visibility = 'visible';
+                overlay.style.opacity = 1;
+                overlay.style.visibility = 'visible';
+                body.style.overflow = 'hidden';
+            } else {
+                dialog.style.opacity = 0;
+                dialog.style.visibility = 'hidden';
+                overlay.style.opacity = 0;
+                overlay.style.visibility = 'hidden';
+                body.style.overflow = 'auto';
+            }
+        }
+    </script>
 </body>
 
 </html>

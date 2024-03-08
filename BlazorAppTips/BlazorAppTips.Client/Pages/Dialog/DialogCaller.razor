@@ -1,0 +1,24 @@
+﻿@page "/dialog-caller"
+@rendermode InteractiveWebAssembly
+@inject IJSRuntime JSRuntime
+
+<h3>DialogCaller</h3>
+<button id="open-button" @onclick="OpenDialog">Open</button>
+
+<MessageDialog @ref="messageDialog" />
+
+@code {
+    private MessageDialog messageDialog = default!;
+
+    private async Task OpenDialog()
+    {
+        await JSRuntime.InvokeVoidAsync("toggle", true);
+
+        var result = await messageDialog.GetResult();
+
+        if (result == MessageDialog.Result.Yes)
+            Console.WriteLine("Yes");
+        else
+            Console.WriteLine("No");
+    }
+}
