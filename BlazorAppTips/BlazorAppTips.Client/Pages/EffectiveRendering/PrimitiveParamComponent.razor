@@ -1,0 +1,12 @@
+﻿<h3>PrimitiveParamComponent</h3>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "";
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender)
+            Console.WriteLine("Primitive Param Component");
+    }
+}

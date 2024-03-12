@@ -1,0 +1,21 @@
+﻿@page "/effective-rendering/parent-component"
+@using BlazorAppTips.Client.Models
+@rendermode InteractiveWebAssembly
+
+<button @onclick="() => isToggle = !isToggle" style="border: 1px solid black">Click</button>
+@isToggle
+<NoParamComponent />
+<PrimitiveParamComponent Title=@title />
+<CustomClassParamComponent UserInfo=@userInfo />
+
+@code {
+    private bool isToggle = false;
+    private string title = "title";
+    private UserInfo userInfo = new UserInfo();
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender)
+            Console.WriteLine("Parent Component");
+    }
+}

@@ -1,0 +1,28 @@
+﻿@using BlazorAppTips.Client.Models
+<h3>CustomClassParamComponent</h3>
+
+@code {
+    private string prevUserInfoName = "";
+    private string prevUserInfoEmail = "";
+    private bool shouldRender = false;
+
+    [Parameter]
+    public UserInfo UserInfo { get; set; } = default!;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender)
+            Console.WriteLine("Custom Class Param Component");
+    }
+
+    protected override void OnParametersSet()
+    {
+        // Judge this component shyould render or not
+        shouldRender = prevUserInfoName != UserInfo.Name || prevUserInfoEmail != UserInfo.Email;
+
+        prevUserInfoName = UserInfo.Name;
+        prevUserInfoEmail = UserInfo.Email;
+    }
+
+    protected override bool ShouldRender() => shouldRender;
+}
